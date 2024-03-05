@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    links:
+      - "db_rules"
+    ports:
+      - "5001:5000"
+
+  db_rules:
+    image: mysql:5.6
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ticket_rules
+      MYSQL_PASSWORD: root
+    ports:
+      - "3311:3306"
+    volumes:
+      - ./mysql_backup_rules_db:/var/lib/mysql
+
+volumes:
+  mysql_backup_rules_db:
