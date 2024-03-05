@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    links:
+      - "db_ticket"
+    ports:
+      - "5000:5000"
+
+  db_ticket:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ticket
+      MYSQL_PASSWORD: root
+    ports:
+      - "3310:3306"
+    volumes:
+      - ./mysql_backup_ticket_sales:/var/lib/mysql
